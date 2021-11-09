@@ -28,6 +28,15 @@ class ProdutoController extends Controller
         return view('produtos\produto_listar',compact('produtos'));
       
     }
+
+    public function buscar_especifico()
+    {
+ 
+        $produtos = DB::select("SELECT p.id, p.nome, p.descricao, p.valor, f.nome as fornecedor FROM produto p 
+        INNER JOIN fornecedor f on f.id = p.id_fornecedor");
+        return view('produtos\produto_listar',compact('produtos'));
+      
+    }
     public function produtos_cadastro()
     {
           

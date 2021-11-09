@@ -62,4 +62,4 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::get('/produtos_listar', [App\Http\Controllers\ProdutoController::class, 'index'])->name('listar_produtos');
-Route::get('/produtos_cadastro', [App\Http\Controllers\ProdutoController::class, 'produtos_cadastro'])->name('produtos_cadastro');
+Route::post('produtos_listar', [App\Http\Controllers\ProdutoController::class, 'index'])->name('listar_produtos');
