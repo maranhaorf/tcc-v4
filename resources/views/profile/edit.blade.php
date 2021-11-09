@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'profile', 'titlePage' => __('User Profile')])
+@extends('layouts.app', ['activePage' => 'profile', 'titlePage' => __('Perfil de Usuario')])
 
 @section('content')
   <div class="content">
@@ -11,8 +11,8 @@
 
             <div class="card ">
               <div class="card-header card-header-primary">
-                <h4 class="card-title">{{ __('Edit Profile') }}</h4>
-                <p class="card-category">{{ __('User information') }}</p>
+                <h4 class="card-title">{{ __('Editar Perfil') }}</h4>
+                <p class="card-category">{{ __('Informação do usuário') }}</p>
               </div>
               <div class="card-body ">
                 @if (session('status'))
@@ -65,7 +65,7 @@
 
             <div class="card ">
               <div class="card-header card-header-primary">
-                <h4 class="card-title">{{ __('Change password') }}</h4>
+                <h4 class="card-title">{{ __('Alterar Senha') }}</h4>
                 <p class="card-category">{{ __('Password') }}</p>
               </div>
               <div class="card-body ">
@@ -104,16 +104,18 @@
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-sm-2 col-form-label" for="input-password-confirmation">{{ __('Confirm New Password') }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-password-confirmation">{{ __('Confirme a nova senha
+                    ') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group">
-                      <input class="form-control" name="password_confirmation" id="input-password-confirmation" type="password" placeholder="{{ __('Confirm New Password') }}" value="" required />
+                      <input class="form-control" name="password_confirmation" id="input-password-confirmation" type="password" placeholder="{{ __('Confirme a nova senha
+                      ') }}" value="" required />
                     </div>
                   </div>
                 </div>
               </div>
               <div class="card-footer ml-auto mr-auto">
-                <button type="submit" class="btn btn-primary">{{ __('Change password') }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Alterar ') }}</button>
               </div>
             </div>
           </form>
