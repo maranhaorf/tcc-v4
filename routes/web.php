@@ -61,3 +61,5 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
+Route::get('/produtos_listar', [App\Http\Controllers\ProdutoController::class, 'index'])->name('listar_produtos');
+Route::get('/produtos_cadastro', [App\Http\Controllers\ProdutoController::class, 'produtos_cadastro'])->name('produtos_cadastro');

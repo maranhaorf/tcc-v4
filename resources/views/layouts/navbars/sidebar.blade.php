@@ -52,7 +52,7 @@
         <div class="collapse show" id="produtos">
           <ul class="nav">
             <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-              <a class="nav-link" href="{{ route('profile.edit') }}">
+              <a class="nav-link" href="{{ route('listar_produtos') }}">
                 <span class="sidebar-mini"> MP </span>
                 <span class="sidebar-normal">{{ __('Gerenciar prodotos') }} </span>
               </a>
