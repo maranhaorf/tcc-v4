@@ -4,17 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Models\Fornecedor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FornecedorController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {    
+       
+        $fornecedores = DB::select("SELECT * FROM fornecedor");
+        return view('fornecedor\fornecedor_listar',compact('fornecedores'));
+    }
+
+
+    public function busca_especifico(Request $request)
+    {    
+       
+        $fornecedores = DB::select("SELECT * FROM fornecedor where nome LIKE'%%'");
+        return view('fornecedor\fornecedor_listar',compact('fornecedores'));
     }
 
     /**
