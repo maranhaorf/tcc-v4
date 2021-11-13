@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fornecedor;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use DataTables;
 
 class FornecedorController extends Controller
 {
@@ -24,6 +26,26 @@ class FornecedorController extends Controller
         $fornecedores = DB::select("SELECT * FROM fornecedor");
         return view('fornecedor\fornecedor_listar',compact('fornecedores'));
     }
+    
+    public function getStudents(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Fornecedor::select('*');
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+     
+                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+    
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        
+        return view('users');
+    }
+    
 
 
     public function busca_especifico(Request $request)
@@ -51,8 +73,16 @@ class FornecedorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        Fornecedor::create([
+            'nome' => $request->nome,
+            'cnpj' =>$request->cnpj,
+            'endereco' => $request->endereco
+        ]);
+
+        return response()->json(['success'=>'Ajax request submitted successfully']);
     }
+    
 
     /**
      * Display the specified resource.

@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Fornecedor extends Model
 {
+    protected $table = 'fornecedor';
     use HasFactory;
+
+    protected $fillable = [
+        'nome',
+        'cnpj',
+        'endereco',
+    ];
 }
