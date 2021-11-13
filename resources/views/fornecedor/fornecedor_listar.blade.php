@@ -102,11 +102,9 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">
- pesquisar()
-</script>
+
 <script>
-  pesquisar() 
+
   function cadastro_fornecedor(value) {
   
     $.ajax({
@@ -126,28 +124,39 @@
        });
 }
 
-function pesquisar() {
-   alert("ss");
-  var table = $('.yajra-datatable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('listar') }}",
-        columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'name', name: 'name'},
-            {data: 'email', name: 'email'},
-            {data: 'username', name: 'username'},
-            {data: 'phone', name: 'phone'},
-            {data: 'dob', name: 'dob'},
-            {
-                data: 'action', 
-                name: 'action', 
-                orderable: true, 
-                searchable: true
-            },
-        ]
-    });
-}
+
+$(document).ready(function () {
+	$('#tabela').DataTable({
+		language: {
+			"url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json",
+		},
+		processing: true,
+		serverSide: true,
+		ajax: '/fornecedor_listar',
+		dom: 'Bfrtip',
+		buttons: [{
+			text: 'My button',
+			action: function (e, dt, node, config) {
+				alert('Button activated');
+			}
+		}],
+		columns: [{
+			data: 'id',
+			name: 'id'
+		}, {
+			data: 'nome',
+			name: 'nome'
+		}, {
+			data: 'cnpj',
+			name: 'cnpj'
+		}, {
+			data: 'endereco',
+			name: 'endereco',
+			orderable: false,
+			searchable: false
+		}, ]
+	});
+});
 </script>
 
 @endsection

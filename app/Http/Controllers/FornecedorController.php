@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fornecedor;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use DataTables;
+use Yajra\DataTables\Datatables;
 
 class FornecedorController extends Controller
 {
@@ -20,39 +19,27 @@ class FornecedorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {    
-       
-        $fornecedores = DB::select("SELECT * FROM fornecedor");
-        return view('fornecedor\fornecedor_listar',compact('fornecedores'));
-    }
-    
-    public function getStudents(Request $request)
+
+
+    public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Fornecedor::select('*');
-            return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
-     
-                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-    
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+            $data = Fornecedor::all();
+            return DataTables::of($data)->addIndexColumn()->addColumn('action', function ($row) {
+                $btn = '<button onclick="show(' . $row->id . ')" class="edit btn btn-primary btn-sm">Exibir</button>                            <button onclick="excluir(' . $row->id . ')" class="edit btn btn-danger btn-sm">Excluir</button>                            <button onclick="edit(' . $row->id . ')" class="edit btn btn-warning btn-sm">Editar</button>';
+                return $btn;
+            })->rawColumns(['action'])->make(true);
         }
-        
-        return view('users');
+        return view('fornecedor\fornecedor_listar');
     }
-    
+
 
 
     public function busca_especifico(Request $request)
-    {    
-       
+    {
+
         $fornecedores = DB::select("SELECT * FROM fornecedor where nome LIKE'%%'");
-        return view('fornecedor\fornecedor_listar',compact('fornecedores'));
+        return view('fornecedor\fornecedor_listar', compact('fornecedores'));
     }
 
     /**
@@ -73,16 +60,16 @@ class FornecedorController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         Fornecedor::create([
             'nome' => $request->nome,
-            'cnpj' =>$request->cnpj,
+            'cnpj' => $request->cnpj,
             'endereco' => $request->endereco
         ]);
 
-        return response()->json(['success'=>'Ajax request submitted successfully']);
+        return response()->json(['success' => 'Ajax request submitted successfully']);
     }
-    
+
 
     /**
      * Display the specified resource.

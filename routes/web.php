@@ -65,6 +65,6 @@ Route::get('/produtos_listar', [App\Http\Controllers\ProdutoController::class, '
 Route::post('produtos_listar', [App\Http\Controllers\ProdutoController::class, 'index'])->name('listar_produtos');
 Route::get('/fornecedor_listar', [App\Http\Controllers\FornecedorController::class, 'index'])->name('fornecedor_listar');
 
-Route::get('listar', [App\Http\Controllers\FornecedorController::class, 'getStudents'])->name('listar');
+
 
 Route::post('fornecedor_cadastro', [App\Http\Controllers\FornecedorController::class, 'store'])->name('fornecedor_cadastro');
