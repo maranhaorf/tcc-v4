@@ -6,6 +6,7 @@ use App\Models\Fornecedor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Datatables;
+use Response;
 
 class FornecedorController extends Controller
 {
@@ -26,7 +27,7 @@ class FornecedorController extends Controller
         if ($request->ajax()) {
             $data = Fornecedor::all();
             return DataTables::of($data)->addIndexColumn()->addColumn('action', function ($row) {
-                $btn = '<button onclick="show(' . $row->id . ')" class="edit btn btn-primary btn-sm">Exibir</button>                            <button onclick="excluir(' . $row->id . ')" class="edit btn btn-danger btn-sm">Excluir</button>                            <button onclick="edit(' . $row->id . ')" class="edit btn btn-warning btn-sm">Editar</button>';
+                $btn = '<button onclick="excluir(' . $row->id . ')" class="edit btn btn-danger btn-sm">Excluir</button><button onclick="editar(' . $row->id . ')" class="edit btn btn-warning btn-sm">Editar</button>';
                 return $btn;
             })->rawColumns(['action'])->make(true);
         }
@@ -77,9 +78,11 @@ class FornecedorController extends Controller
      * @param  \App\Models\Fornecedor  $fornecedor
      * @return \Illuminate\Http\Response
      */
-    public function show(Fornecedor $fornecedor)
+    public function show($id)
     {
-        //
+        $fornecedor = Fornecedor::find($id);
+        
+        return Response::json($fornecedor);
     }
 
     /**
@@ -90,7 +93,9 @@ class FornecedorController extends Controller
      */
     public function edit(Fornecedor $fornecedor)
     {
-        //
+        $fornecedor = Fornecedor::find($id);
+        
+        return Response::json($fornecedor);
     }
 
     /**
@@ -100,9 +105,13 @@ class FornecedorController extends Controller
      * @param  \App\Models\Fornecedor  $fornecedor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Fornecedor $fornecedor)
+    public function update(Request $request, $id)
     {
-        //
+        Fornecedor::where('id', $id)->update([
+            'nome' => $request->nome_altera,
+            'cnpj' => $request->cnpj_altera,
+            'endereco' => $request->endereco_altera,
+        ]);
     }
 
     /**
@@ -111,8 +120,10 @@ class FornecedorController extends Controller
      * @param  \App\Models\Fornecedor  $fornecedor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Fornecedor $fornecedor)
+    public function destroy($id)
     {
-        //
+        $fornecedor = Fornecedor::find($id);
+
+        $fornecedor->delete();
     }
 }

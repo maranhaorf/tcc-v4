@@ -88,7 +88,7 @@
               </a>
             </li>
             <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-              <a class="nav-link" href="{{ route('fornecedor_listar') }}">
+              <a class="nav-link" href="{{ url('fornecedor') }}">
                 <span class="sidebar-mini"> GF </span>
                 <span class="sidebar-normal"> {{ __('Gerenciar Fornecedores') }} </span>
               </a>
