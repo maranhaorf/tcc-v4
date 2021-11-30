@@ -2,48 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fornecedor;
 use App\Models\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Constraint\Count;
+use Yajra\DataTables\Datatables;
+use Response;
 
 class ProdutoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
     public function __construct()
     {
         $this->middleware('auth');
     }
-
-
-    public function index()
+    public function index(Request $request)
     {
- 
-        $produtos = DB::select("SELECT p.id, p.nome, p.descricao, p.valor, f.nome as fornecedor FROM produto p 
-        INNER JOIN fornecedor f on f.id = p.id_fornecedor");
-        return view('produtos\produto_listar',compact('produtos'));
-      
-    }
-
-    public function buscar_especifico()
-    {
- 
-        $produtos = DB::select("SELECT p.id, p.nome, p.descricao, p.valor, f.nome as fornecedor FROM produto p 
-        INNER JOIN fornecedor f on f.id = p.id_fornecedor");
-        return view('produtos\produto_listar',compact('produtos'));
-      
-    }
-    public function produtos_cadastro()
-    {
-          
-        $fornecedor = DB::table('fornecedor')->get();
+        if ($request->ajax()) {
+            $data = DB::select('SELECT p.*, f.nome as fornecedor FROM produto p 
+            INNER JOIN fornecedor f ON (f.id = p.id)');
+           
+            return DataTables::of($data)->addIndexColumn()->addColumn('action', function ($row) {
+                $btn = '<button onclick="excluir(' . $row->id . ')" class="edit btn btn-danger btn-sm">Excluir</button><button onclick="editar(' . $row->id . ')" class="edit btn btn-warning btn-sm">Editar</button>';
+                return $btn;
+            })->rawColumns(['action'])->make(true);
+        }
+        $fornecedores = $this->buscar_fornecedores();
      
-        return view('produtos\produtos_cadastro',compact('fornecedor'));
-      
+  
+        return view('produtos\produto_listar',compact('fornecedores'));
+    }
+    public function buscar_fornecedores()
+    {
+        $data = DB::select('select id,nome from fornecedor ');
+   
+
+        return  $data;
     }
 
     /**
@@ -63,28 +58,40 @@ class ProdutoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {  
+        
+        Produto::create([
+            'nome' => $request->nome,
+            'descricao' => $request->descricao,
+            'valor' => $request->valor,
+            'tamanho' => $request->tamanho,
+            'cor' => $request->cor,
+            'id_fornecedor' => $request->id_fornecedor
+        ]);
+
+        return response()->json(['success' => 'Ajax request submitted successfully']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Produto  $produto
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Produto $produto)
+    public function show($id)
     {
-        //
+        $produto = Produto::find($id);
+        
+        return Response::json($produto);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Produto  $produto
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Produto $produto)
+    public function edit($id)
     {
         //
     }
@@ -93,10 +100,10 @@ class ProdutoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Produto  $produto
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Produto $produto)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -104,12 +111,11 @@ class ProdutoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Produto  $produto
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Produto $produto)
+    public function destroy($id)
     {
         //
     }
-
 }

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FornecedorController;
-
+use App\Http\Controllers\ProdutoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -62,13 +62,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
-Route::get('/produtos_listar', [App\Http\Controllers\ProdutoController::class, 'index'])->name('listar_produtos');
-Route::post('produtos_listar', [App\Http\Controllers\ProdutoController::class, 'index'])->name('listar_produtos');
 
 
-//Route::get('/fornecedor_listar', [App\Http\Controllers\FornecedorController::class, 'index'])->name('fornecedor_listar');
-//Route::post('fornecedor_cadastro', [App\Http\Controllers\FornecedorController::class, 'store'])->name('fornecedor_cadastro');
-//Route::GET('pega_fornecedor/{id}', [App\Http\Controllers\FornecedorController::class, 'show'])->name('pega_fornecedor');
-//Route::DELETE('apaga_fornecedor/{id}', [App\Http\Controllers\FornecedorController::class, 'destroy'])->name('apaga_fornecedor');
 
 Route::resource('fornecedor', FornecedorController::class);
+Route::resource('produto', ProdutoController::class);
