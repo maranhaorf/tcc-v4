@@ -95,7 +95,7 @@
                 <div class="col-sm-12">
                   <div class="form-group">
                     <label for="CNPJ">Produto</label>
-                    <select class="browser-default custom-select" id="id_produto" name="id_produto" required>
+                    <select class="browser-default custom-select" id="id_produto_alterar" name="id_produto_alterar" disabled>
                       <option selected>Selecione Um Produto</option>
 
 
@@ -117,14 +117,14 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="CNPJ">Quantidade</label>
-                    <input class="form-control" type="number" min='1' id="quantidade" name="quantidade"
+                    <input class="form-control" type="number" min='1' id="quantidade_alterar" name="quantidade_alterar"
                       aria-describedby="Quantidade" placeholder="Digite a Quantidade em Estoque">
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="CNPJ">Minimo em Estoque</label>
-                    <input class="form-control" type="number" min='1' name="estoque_minimo" id="estoque_minimo"
+                    <input class="form-control" type="number" min='1' name="estoque_minimo_alterar" id="estoque_minimo_alterar"
                       aria-describedby="estoque_minimo" placeholder="Digite o estoque minimo">
                   </div>
                 </div>
@@ -219,6 +219,9 @@
           $('#tabela').DataTable().ajax.reload();
           swal("Sucesso!","Estoque Cadastrado" , "success");
           $("#exampleModalCenter").modal("hide");
+        }else{
+          swal("error!","Estoque ja Cadastrado" , "error");
+          $("#exampleModalCenter").modal("hide");
         }
       },
       error: function(error) {
@@ -233,14 +236,10 @@
       // data: $('#cadastro_estoque').serialize(),
       url: `estoque/${id}`,
       success:function(response){
-        
-        $("#nome_altera").val(response.nome);
-        $("#tamanho_altera").val(response.tamanho);
-        $("#descricao_altera").val(response.descricao);
-        $("#valor_altera").val(response.valor);
-        $("#cor_altera").val(response.cor);
+        $("#id_produto_alterar").val(response.id_produto);
+        $("#quantidade_alterar").val(response.quantidade);
+        $("#estoque_minimo_alterar").val(response.estoque_minimo);
         $("#id_altera").val(response.id);
-        $("#id_fornecedor_altera").val(response.id_fornecedor);
         $("#modal-estoque-altera").modal("show");
 
       },

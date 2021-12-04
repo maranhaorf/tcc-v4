@@ -8,6 +8,7 @@ use App\Models\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\TryCatch;
 use Yajra\DataTables\Datatables;
 use Response;
 
@@ -41,7 +42,7 @@ class EstoqueController extends Controller
     }
     public function buscar_produtos()
     {
-        $data = DB::select("select id,nome from produto WHERE status not in('Estoque') ");
+        $data = DB::select("select id,nome from produto  ");
    
 
         return  $data;
@@ -73,6 +74,10 @@ class EstoqueController extends Controller
      */
     public function store(Request $request)
     {
+        try {
+  
+
+
         Produto::where('id',$request->id_produto)->update([
             'status' =>"Estoque",
         ]);
@@ -85,28 +90,18 @@ class EstoqueController extends Controller
         ]);
       
         return response()->json(['success' => 'Ajax request submitted successfully']);
-    }
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Fornecedor  $fornecedor
-     * @return \Illuminate\Http\Response
-     */
+            } catch (\Throwable $th) {
+                return false;
+            }
+        }
     public function show($id)
     {
         $estoque = Estoque::find($id);
-        
+      
         return Response::json($estoque);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Fornecedor  $fornecedor
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Fornecedor $fornecedor)
     {
         $fornecedor = Fornecedor::find($id);
@@ -114,19 +109,13 @@ class EstoqueController extends Controller
         return Response::json($fornecedor);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Fornecedor  $fornecedor
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        Fornecedor::where('id', $id)->update([
-            'nome' => $request->nome_altera,
-            'cnpj' => $request->cnpj_altera,
-            'endereco' => $request->endereco_altera,
+      
+        Estoque::where('id', $id)->update([
+            'quantidade' => $request->quantidade_alterar,
+            'estoque_minimo' => $request->estoque_minimo_alterar
+           
         ]);
     }
 
@@ -138,8 +127,8 @@ class EstoqueController extends Controller
      */
     public function destroy($id)
     {
-        $fornecedor = Fornecedor::find($id);
+        $estoque = Estoque::find($id);
 
-        $fornecedor->delete();
+        $estoque->delete();
     }
 }

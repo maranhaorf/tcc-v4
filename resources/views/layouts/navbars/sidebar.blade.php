@@ -89,6 +89,27 @@
 
 
     <ul class="nav">
+      <li class="nav-item {{ ($activePage == 'pedidos' || $activePage == 'pedidos') ? ' active' : '' }}">
+        <a class="nav-link" data-toggle="collapse" href="#pedidos" aria-expanded="true">
+          <i><img style="width:25px" src="{{ asset('material') }}/img/pedido.svg"></i>
+          <p>{{ __('Pedidos') }}
+            <b class="caret"></b>
+          </p>
+        </a>
+        <div class="collapse show" id="pedidos">
+          <ul class="nav">
+            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+              <a class="nav-link" href="{{ url('pedido') }}">
+                <span class="sidebar-mini"> GP </span>
+                <span class="sidebar-normal">{{ __('Gerenciar Pedido') }} </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+
+    <ul class="nav">
       <li class="nav-item {{ ($activePage == 'fornecedores' || $activePage == 'fornecedor') ? ' active' : '' }}">
         <a class="nav-link" data-toggle="collapse" href="#fornecedor" aria-expanded="true">
           <i><img style="width:25px" src="{{ asset('material') }}/img/fornecedor.svg"></i>
