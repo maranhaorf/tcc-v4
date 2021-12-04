@@ -61,16 +61,33 @@
                 <span class="sidebar-normal">{{ __('Gerenciar Produtos') }} </span>
               </a>
             </li>
-            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-              <a class="nav-link" href="{{ route('user.index') }}">
-                <span class="sidebar-mini"> UM </span>
-                <span class="sidebar-normal"> {{ __('C') }} </span>
+          </ul>
+        </div>
+      </li>
+    </ul>
+
+    <ul class="nav">
+      <li class="nav-item {{ ($activePage == 'estoques' || $activePage == 'estoques') ? ' active' : '' }}">
+        <a class="nav-link" data-toggle="collapse" href="#estoques" aria-expanded="true">
+          <i><img style="width:25px" src="{{ asset('material') }}/img/estoque.svg"></i>
+          <p>{{ __('Estoque') }}
+            <b class="caret"></b>
+          </p>
+        </a>
+        <div class="collapse show" id="estoques">
+          <ul class="nav">
+            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+              <a class="nav-link" href="{{ url('estoque') }}">
+                <span class="sidebar-mini"> GP </span>
+                <span class="sidebar-normal">{{ __('Gerenciar Estoque') }} </span>
               </a>
             </li>
           </ul>
         </div>
       </li>
     </ul>
+
+
     <ul class="nav">
       <li class="nav-item {{ ($activePage == 'fornecedores' || $activePage == 'fornecedor') ? ' active' : '' }}">
         <a class="nav-link" data-toggle="collapse" href="#fornecedor" aria-expanded="true">

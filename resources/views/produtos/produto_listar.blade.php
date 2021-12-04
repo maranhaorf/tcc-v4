@@ -115,6 +115,7 @@
           <div class="modal-body">
             <form id="altera_produto">
               @csrf
+              <input type="hidden" name="_method" value="PATCH">
               <div class="row">
                 <div class="col-sm-12">
                   <div class="form-group">
@@ -293,7 +294,7 @@
   function editar(id){
     $.ajax({
       type: "GET",
-      //data: $('#cadastro_produto').serialize(),
+      // data: $('#cadastro_produto').serialize(),
       url: `produto/${id}`,
       success:function(response){
         $("#nome_altera").val(response.nome);
@@ -301,6 +302,7 @@
         $("#descricao_altera").val(response.descricao);
         $("#valor_altera").val(response.valor);
         $("#cor_altera").val(response.cor);
+        $("#id_altera").val(response.id);
         $("#id_fornecedor_altera").val(response.id_fornecedor);
         $("#modal-produto-altera").modal("show");
 
@@ -313,6 +315,7 @@
 
   function alterar_produto(){
     let id = $("#id_altera").val();
+ 
     $.ajax({
       type: "POST",
       data: $('#altera_produto').serialize(),

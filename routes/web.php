@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\EstoqueController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,3 +68,4 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::resource('fornecedor', FornecedorController::class);
 Route::resource('produto', ProdutoController::class);
+Route::resource('estoque', EstoqueController::class);

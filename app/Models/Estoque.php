@@ -4,20 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Produto extends Model
+class Estoque extends Model
 {
-    protected $table = 'produto';
+    protected $table = 'estoque';
     use HasFactory;
    
     protected $fillable = [
-        'nome',
-        'descricao',
-        'tamanho',
-        'cor',
-        'valor',
-        'id_fornecedor',
+        'id_produto',
+        'id_usuario',
+        'quantidade',
+        'estoque_minimo'
+
     ];
 
     protected $dates = ['deleted_at'];
