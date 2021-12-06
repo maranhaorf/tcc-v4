@@ -5,6 +5,7 @@ use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\EstoqueController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\ItemPedidoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,3 +72,5 @@ Route::resource('fornecedor', FornecedorController::class);
 Route::resource('produto', ProdutoController::class);
 Route::resource('estoque', EstoqueController::class);
 Route::resource('pedido', PedidoController::class);
+Route::resource('item_pedido', ItemPedidoController::class);
+Route::get('/add_produtos/{id}', [App\Http\Controllers\PedidoController::class, 'add_produtos'])->name('add_produtos');

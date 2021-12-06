@@ -10,7 +10,7 @@
 
 <div class="content">
   <div class="container-fluid">
-
+   
     <!-- Modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
       aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -117,27 +117,58 @@
       </div>
     </div>
 
-
     <div class="card">
       <div class="card-body">
 
 
         <div class="card-header card-header-primary">
-          <h4 class="card-title mt-0"> Listagem de Pedido</h4>
+          <h4 class="card-title mt-0"> Listagem dos Item Pedido</h4>
 
         </div>
+        <div class="row"><br></div>
+        <div class="row">
+          <div class="col-md-1">
+              <div class="form-group">
+                  <label for="exampleInputEmail1">COD</label>
+        
+                  <input type="text" class="form-control" name='cod_pedido' id='cod_pedido'value ="{{$datas[0]->id}}"  disabled>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="form-group">
+                  <label for="exampleInputPassword1">Nome Cliente</label>
+                  <input type="text" class="form-control" value ="{{$datas[0]->nome_cliente}}" 
+                    disabled>
+              </div>
+          </div>
+     
+          <div class="col-md-3">
+              <div class="form-group">
+                  <label for="exampleInputPassword1">Dados Cliente</label>
+                  <input type="text" class="form-control"  value ="{{$datas[0]->cpf_cliente}}"
+                     disabled>
+              </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+                <label for="exampleInputPassword1">Telefone Cliente</label>
+                <input type="text" class="form-control"  value ="{{$datas[0]->telefone_cliente}}" 
+                   disabled>
+            </div>
+        </div>
+      </div>
         <div class="mt-4 mb-4">
-          <button type="button" class="btn btn-info float-left" data-toggle="modal" data-target="#exampleModalCenter">
+          <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#exampleModalCenter">
             Cadastro de Pedido
           </button>
         </div>
         <table id="tabela" class="table table-striped yajra-datatable" style="width:100%">
           <thead>
             <tr class="text-center">
-              <th>Nome do Cliente</th>
-              <th>CPF/CNPJ</th>
-              <th>Telefone</th>
-              <th>Vendedor</th>
+              <th>Cod Produto</th>
+              <th>Produto</th>
+              <th>Quantidade</th>
+              <th>Valor</th>
           
               <th>Opções</th>
             </tr>
@@ -152,6 +183,7 @@
 
 <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
 <script>
+  let id = $("#cod_pedido").val();
   $(document).ready(function () {
   
 	$('#tabela').DataTable({
@@ -160,7 +192,7 @@
 		},
 		processing: true,
 		serverSide: true,
-		ajax: '/pedido',
+		ajax: `/add_produtos/${id}`,
 		dom: 'Bfrtip',
 		buttons: [{
 			text: 'My button',
@@ -174,17 +206,17 @@
 
 
 		columns: [{
-			data: 'nome_cliente',
-			name: 'nome_cliente'
+			data: 'id',
+			name: 'id'
 		}, {
-			data: 'cpf_cliente',
-			name: 'cpf_cliente',
+			data: 'produto',
+			name: 'produto',
 		}, {
-			data: 'telefone_cliente',
-			name: 'telefone_cliente',
+			data: 'quantidade',
+			name: 'quantidade',
 		},{
-			data: 'vendedor',
-			name: 'vendedor',
+			data: 'preco',
+			name: 'preco',
 		},
     {
       data: 'action',

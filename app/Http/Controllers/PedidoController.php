@@ -22,11 +22,11 @@ class PedidoController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB::select('SELECT p.* , u.name as vendedor FROM pedido p 
-            INNER JOIN users u on u.id = p.id_usuario');
+            $data = DB::select("SELECT p.* , u.name as vendedor FROM pedido p 
+            INNER JOIN users u on u.id = p.id_usuario WHERE p.status not in ('Excluido')");
          
             return DataTables::of($data)->addIndexColumn()->addColumn('action', function ($row) {
-                $btn = '<button onclick="excluir(' . $row->id . ')" class="edit btn btn-danger btn-sm">Excluir</button><button onclick="editar(' . $row->id . ')" class="edit btn btn-warning btn-sm">Editar</button>';
+                $btn = '<button onclick="excluir(' . $row->id . ')" class="edit btn btn-danger btn-sm">Excluir</button><button onclick="editar(' . $row->id . ')" class="edit btn btn-warning btn-sm">Editar</button><button onclick="add_produtos(' . $row->id . ')" class="edit btn btn-info btn-sm">Produtos</button>';
                 return $btn;
             })->rawColumns(['action'])->make(true);
         }
@@ -80,9 +80,9 @@ class PedidoController extends Controller
      */
     public function show($id)
     {
-        $produto = Produto::find($id);
+        $pedido = Pedido::find($id);
         
-        return Response::json($produto);
+        return Response::json($pedido);
     }
 
     /**
@@ -106,13 +106,10 @@ class PedidoController extends Controller
     public function update(Request $request, $id)
     {
        
-         Produto::where('id', $id)->update([
-            'nome' => $request->nome_altera,
-            'tamanho' => $request->tamanho_altera,
-            'descricao' => $request->descricao_altera,
-            'cor' => $request->cor_altera,
-            'valor' => $request->valor_altera,
-            'id_fornecedor' => $request->id_fornecedor_altera
+         Pedido::where('id', $id)->update([
+            'nome_cliente' => $request->nome_cliente_altera,
+            'cpf_cliente' => $request->cpf_cliente_altera,
+            'telefone_cliente' => $request->telefone_cliente_altera,
         ]);
     }
 
@@ -124,7 +121,26 @@ class PedidoController extends Controller
      */
     public function destroy($id)
     {  
-        $delete = Produto::find($id);
-        $delete->delete();
+        Pedido::where('id', $id)->update([
+            'status' => 'Excluido'
+        ]);
+    }
+
+      public function add_produtos(Request $request, $id)
+    {  
+        $datas = DB::select("SELECT p.* , u.name as vendedor FROM pedido p 
+        INNER JOIN users u on u.id = p.id_usuario WHERE p.status not in ('Excluido') AND
+        p.id = $id");
+        if ($request->ajax()) {
+            $data = DB::select("SELECT ip.*, p.nome as produto FROM item_pedido ip INNER JOIN produto p on (p.id = ip.id_produto)");
+         
+            return DataTables::of($data)->addIndexColumn()->addColumn('action', function ($row) {
+                $btn = '<button onclick="excluir(' . $row->id . ')" class="edit btn btn-danger btn-sm">Excluir</button><button onclick="editar(' . $row->id . ')" class="edit btn btn-warning btn-sm">Editar</button>';
+                return $btn;
+            })->rawColumns(['action'])->make(true);
+        }
+
+  
+        return view('pedido\add_produtos',compact('datas'));
     }
 }
