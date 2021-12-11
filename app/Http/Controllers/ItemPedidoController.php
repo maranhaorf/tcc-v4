@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Estoque;
 use App\Models\ItemPedido;
+use App\Models\Pedido;
 use App\Models\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -96,6 +97,13 @@ class ItemPedidoController extends Controller
         $input .="<div class='form-group'> <label for='valor'>Valor Total </label> <input class='form-control' type='number'   id='valor_altera' value ='".$produto[0]->preco."' name='valor_altera' ></div>";
         $input .=" <input type='hidden' name='estoque_altera' id='estoque_altera' value ='".$produto[0]->estoque_altera."'>";
         echo $input;
+    }
+    public function finalizar_pedido($id)
+    {  
+        Pedido::where('id', $id)->update([
+            'status' => 'Finalizado'
+        ]);
+       
     }
     /**
      * Show the form for editing the specified resource.

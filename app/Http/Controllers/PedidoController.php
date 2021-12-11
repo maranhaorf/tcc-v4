@@ -25,7 +25,7 @@ class PedidoController extends Controller
     {
         if ($request->ajax()) {
             $data = DB::select("SELECT p.* , u.name as vendedor FROM pedido p 
-            INNER JOIN users u on u.id = p.id_usuario WHERE p.status not in ('Excluido')");
+            INNER JOIN users u on u.id = p.id_usuario WHERE p.status  in ('Criado')");
          
             return DataTables::of($data)->addIndexColumn()->addColumn('action', function ($row) {
                 $btn = '<button onclick="excluir(' . $row->id . ')" class="edit btn btn-danger btn-sm">Excluir</button><button onclick="editar(' . $row->id . ')" class="edit btn btn-warning btn-sm">Editar</button><button onclick="add_produtos(' . $row->id . ')" class="edit btn btn-info btn-sm">Produtos</button>';
@@ -35,6 +35,21 @@ class PedidoController extends Controller
 
   
         return view('pedido\pedido_listar');
+    }
+    public function finalizado(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::select("SELECT p.* , u.name as vendedor FROM pedido p 
+            INNER JOIN users u on u.id = p.id_usuario WHERE p.status  in ('Finalizado')");
+         
+            return DataTables::of($data)->addIndexColumn()->addColumn('action', function ($row) {
+                $btn = '<button onclick="add_produtos(' . $row->id . ')" class="edit btn btn-info btn-sm">Produtos</button>';
+                return $btn;
+            })->rawColumns(['action'])->make(true);
+        }
+
+  
+        return view('pedido\pedido_listar_finalizado');
     }
     public function buscar_fornecedores()
     {

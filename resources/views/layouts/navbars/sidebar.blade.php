@@ -103,6 +103,14 @@
                 <span class="sidebar-mini"> GP </span>
                 <span class="sidebar-normal">{{ __('Gerenciar Pedido') }} </span>
               </a>
+              
+            </li>
+            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+              <a class="nav-link" href="{{ url('finalizado') }}">
+                <span class="sidebar-mini"> SP </span>
+                <span class="sidebar-normal">{{ __('Separaçaõ de Pedidos') }} </span>
+              </a>
+              
             </li>
           </ul>
         </div>

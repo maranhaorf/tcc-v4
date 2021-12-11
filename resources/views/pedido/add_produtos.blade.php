@@ -151,6 +151,11 @@
             </div>
         </div>
       </div>
+      <div class="mt-4 mb-4">
+        <button type="button" class="btn btn-success float-right" onclick="finalizar_pedido('{{$datas[0]->id}}')">
+          Finalizar Pedido
+        </button>
+      </div>
         <div class="mt-4 mb-4">
           <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#exampleModalCenter">
             Cadastro de Item Pedido
@@ -326,6 +331,23 @@
        
         $("#input_quantidade_2").html(response);
        
+
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  }
+  function finalizar_pedido(id){
+    $.ajax({
+      type: "GET",
+      // data: $('#cadastro_item_pedido').serialize(),
+      url: `/finalizar_pedido/${id}`,
+      success:function(response){
+       
+        swal("Sucesso!","Pedido Finalizado" , "success");
+        setTimeout(() => {  window.location.href = "/pedido" }, 2000);
+        
 
       },
       error: function(error) {
