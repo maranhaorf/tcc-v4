@@ -98,6 +98,25 @@ class ItemPedidoController extends Controller
         $input .=" <input type='hidden' name='estoque_altera' id='estoque_altera' value ='".$produto[0]->estoque_altera."'>";
         echo $input;
     }
+    public function estoque_minimo()
+    {
+        $produto = DB::select("SELECT e.*, p.nome from estoque e 
+        INNER JOIN produto p on p.id = e.id_produto
+        ");
+        $input ='';
+        foreach ($produto as  $value) {
+            if($value->estoque_minimo>=$value->quantidade){
+          
+            $input .="<a class='dropdown-item' href='#'>Produto ".$value->nome.", Esta com uma quantidade de ".$value->quantidade." em estoque</a>";  
+        }
+        if($input ==""){
+            $input .="  <a class='dropdown-item' href='#'>Estoque em Perfeito Estado</a>"; 
+        }
+     
+        }
+       
+        echo $input;
+    }
     public function finalizar_pedido($id)
     {  
         Pedido::where('id', $id)->update([

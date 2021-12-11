@@ -172,15 +172,7 @@
   <span class="navbar-toggler-icon icon-bar"></span>
   </button>
   <div class="collapse navbar-collapse justify-content-end">
-    <form class="navbar-form">
-      <span class="bmd-form-group"><div class="input-group no-border">
-      <input type="text" value="" class="form-control" placeholder="Search...">
-      <button type="submit" class="btn btn-white btn-round btn-just-icon">
-        <i class="material-icons">search</i>
-        <div class="ripple-container"></div>
-      </button>
-      </div></span>
-    </form>
+
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" href="{{ route('home') }}">
@@ -199,7 +191,7 @@
           </p>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">Mike John responded to your email</a>
+          <a class="dropdown-item" href="#"> 555 John responded to your email</a>
           <a class="dropdown-item" href="#">You have 5 new tasks</a>
           <a class="dropdown-item" href="#">You're now friend with Andrew</a>
           <a class="dropdown-item" href="#">Another Notification</a>
@@ -287,40 +279,18 @@
     </div>
   </div>
 </div>
-  <footer class="footer">
-<div class="container-fluid">
-  <nav class="float-left">
-    <ul>
-      <li>
-        <a href="https://www.creative-tim.com">
-            Creative Tim
-        </a>
-      </li>
-      <li>
-        <a href="https://creative-tim.com/presentation">
-            About Us
-        </a>
-      </li>
-      <li>
-        <a href="http://blog.creative-tim.com">
-            Blog
-        </a>
-      </li>
-      <li>
-        <a href="https://www.creative-tim.com/license">
-            Licenses
-        </a>
-      </li>
-    </ul>
-  </nav>
-  <div class="copyright float-right">
-    ©
-    <script>
-      document.write(new Date().getFullYear())
-    </script>, made with <i class="material-icons">favorite</i> by
-    <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> and <a href="https://www.updivision.com" target="_blank">UPDIVISION</a> for a better web.
+<footer class="footer">
+  <div class="container">
+      
+     
+      <div class="copyright float-right">
+      &copy;
+      <script>
+          document.write(new Date().getFullYear())
+      </script>, J.A Aluminio<i class="material-icons">favorite</i>
+      Todos os Direitos Resevados.
+      </div>
   </div>
-</div>
 </footer>
 </div>
 </div>
