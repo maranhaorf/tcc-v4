@@ -54,6 +54,7 @@
 
           </div>
           <div class="modal-footer">
+            <input type="hidden" name="id_pedido" id="id_pedido" value ="{{$datas[0]->id}}" >
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
             <button type="button" class="btn btn-primary" onclick="cadastro_item_pedido()">Cadastrar</button>
           </div>

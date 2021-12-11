@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Estoque;
 use App\Models\Fornecedor;
+use App\Models\ItemPedido;
 use App\Models\Pedido;
 use App\Models\Produto;
 use Illuminate\Http\Request;
@@ -121,9 +123,43 @@ class PedidoController extends Controller
      */
     public function destroy($id)
     {  
-        Pedido::where('id', $id)->update([
-            'status' => 'Excluido'
-        ]);
+   
+        
+        try { 
+          
+            $delete = DB::select('select * from item_pedido where id_pedido = ?', [$id]);
+            if($delete){
+                DB::beginTransaction();
+         
+            $valor  = 0;
+            $id_produto = 0;
+            foreach ($delete as $linha) {
+               $valor = ($linha->quantidade);
+               $id_produto = $linha->id_produto;
+           
+            Pedido::where('id', $id)->update([
+                'status' => 'Excluido'
+            ]);
+           
+         
+            $novo = DB::select("select (quantidade  + $valor) as quantidade from estoque where id_produto = ?", [$id_produto]);
+           
+            Estoque::where('id_produto',$id_produto)->update([
+                'quantidade' =>$novo[0]->quantidade
+            ]);
+        }
+            DB::delete('delete from item_pedido where id_pedido = ?', [$id]);
+           
+            DB::commit();
+        }else{
+            Pedido::where('id', $id)->update([
+                'status' => 'Excluido'
+            ]);
+        }
+        } catch (\Throwable $th) {
+            DB::rollBack();
+        }
+        
     }
 
       public function add_produtos(Request $request, $id)
@@ -133,7 +169,7 @@ class PedidoController extends Controller
         p.id = $id");
         $produtoes =  DB::select("SELECT id, nome FROM produto");
         if ($request->ajax()) {
-            $data = DB::select("SELECT ip.*, p.nome as produto FROM item_pedido ip INNER JOIN produto p on (p.id = ip.id_produto)");
+            $data = DB::select("SELECT ip.*, p.nome as produto FROM item_pedido ip INNER JOIN produto p on (p.id = ip.id_produto) where ip.id_pedido = $id");
          
             return DataTables::of($data)->addIndexColumn()->addColumn('action', function ($row) {
                 $btn = '<button onclick="excluir(' . $row->id . ')" class="edit btn btn-danger btn-sm">Excluir</button><button onclick="editar(' . $row->id . ')" class="edit btn btn-warning btn-sm">Editar</button>';

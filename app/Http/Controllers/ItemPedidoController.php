@@ -56,7 +56,8 @@ class ItemPedidoController extends Controller
         ItemPedido::create([
             'id_produto' => $request->id_produto,
             'quantidade' => $request->quantidade,
-            'preco' => $request->valor
+            'preco' => $request->valor,
+            'id_pedido' => $request->id_pedido
          
         ]);
   

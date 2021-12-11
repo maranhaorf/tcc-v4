@@ -14,5 +14,6 @@ class ItemPedido extends Model
         'id_produto',
         'quantidade',
         'preco',
+        'id_pedido',
     ];
 }
