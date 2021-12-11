@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'profile', 'titlePage' => __('Lista Pedidos')])
+@extends('layouts.app', ['activePage' => 'profile', 'titlePage' => __('Lista Item Pedidos')])
 
 @section('content')
 <style>
@@ -17,48 +17,45 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Cadastro de Pedido</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">Cadastro de Item Pedido</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <form id="cadastro_pedido">
+            <form id="cadastro_item_pedido" method="POST">
               @csrf
            
           
                   <div class="form-group">
-                    <label for="Nome">Nome Cliente</label>
-                    <input type="text" class="form-control" id="nome_cliente" name='nome_cliente' aria-describedby="nome_cliente"
-                      placeholder="Digite o Nome do Cliente">
+                    <label for="Nome">Nome Produto</label>
+                    <select class="browser-default custom-select" id="id_produto" name="id_produto"onChange="function_quantidade(this.options[this.selectedIndex].value)" >
+                      <option selected>Selecione Um Produtos</option>
+                    
+                       
+                    
+                      @foreach($produtoes as $produto)
+                  
+                      <option value="{{$produto->id}}">{{$produto->nome}}</option>
+                        
+                
+                      @endforeach
+                
+                    </select>
                   </div>
          
             
           
               
-                  <div class="form-group">
-                    <label for="Nome">Dado Cliente - CPF/CNPJ</label>
-                    <input type="text" class="form-control" id="cpf_cliente" name='cpf_cliente' aria-describedby="cpf_cliente"
-                      placeholder="Digite o CPF ou Cnpj do Cliente">
+                  <div id="input_quantidade" name='input_quantidade' >
+                  
                   </div>
                 
-             
-              
-          
-                  <div class="form-group">
-                    <label for="CNPJ">Telefone Cliente</label>
-                    <input class="form-control" type="tel" id="telefone_cliente" name="telefone_cliente" aria-describedby="telefone_cliente"
-                      placeholder="Digite o numero Do Cliente">
-                  </div>
-               
-            
-                
-
 
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-            <button type="button" class="btn btn-primary" onclick="cadastro_pedido()">Cadastrar</button>
+            <button type="button" class="btn btn-primary" onclick="cadastro_item_pedido()">Cadastrar</button>
           </div>
           </form>
         </div>
@@ -66,51 +63,47 @@
     </div>
 
     <!--Modal altera-->
-    <div class="modal fade" id="modal-pedido-altera" tabindex="-1" role="dialog"
+    <div class="modal fade" id="modal-item_pedido-altera" tabindex="-1" role="dialog"
       aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Alterar Pedido</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">Alterar Item Pedido</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <form id="altera_pedido">
+            <form id="altera_item_pedido">
               @csrf
               <input type="hidden" name="_method" value="PATCH">
             
-              <div class="form-group">
-                <label for="Nome">Nome Cliente</label>
-                <input type="text" class="form-control" id="nome_cliente_altera" name='nome_cliente_altera' aria-describedby="nome_cliente_altera"
-                  placeholder="Digite o Nome do Cliente">
-              </div>
-     
+              <select class="browser-default custom-select" id="id_produto_altera" name="id_produto_altera" disabled>
+                <option selected>Selecione Um Produtos</option>
+              
+                 
+              
+                @foreach($produtoes as $produto)
+            
+                <option value="{{$produto->id}}">{{$produto->nome}}</option>
+                  
+          
+                @endforeach
+          
+              </select>
         
       
-          
-              <div class="form-group">
-                <label for="Nome">Dado Cliente - CPF/CNPJ</label>
-                <input type="text" class="form-control" id="cpf_cliente_altera" name='cpf_cliente_altera' aria-describedby="cpf_cliente_altera"
-                  placeholder="Digite o CPF ou Cnpj do Cliente">
-              </div>
-            
-         
-          
-      
-              <div class="form-group">
-                <label for="CNPJ">Telefone Cliente</label>
-                <input class="form-control" type="tel" id="telefone_cliente_altera" name="telefone_cliente_altera" aria-describedby="telefone_cliente_altera"
-                  placeholder="Digite o numero Do Cliente">
+              <div id="input_quantidade_2" name='input_quantidade_2' >
+                  
               </div>
            
 
           </div>
           <input type="hidden" name="id_altera" id="id_altera">
+          <input type="hidden" name="quantidade_old_altera" id="quantidade_old_altera">
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-            <button type="button" class="btn btn-primary" onclick="alterar_pedido()">Alterar</button>
+            <button type="button" class="btn btn-primary" onclick="alterar_item_pedido()">Alterar</button>
           </div>
           </form>
         </div>
@@ -131,7 +124,7 @@
               <div class="form-group">
                   <label for="exampleInputEmail1">COD</label>
         
-                  <input type="text" class="form-control" name='cod_pedido' id='cod_pedido'value ="{{$datas[0]->id}}"  disabled>
+                  <input type="text" class="form-control" name='cod_item_pedido' id='cod_item_pedido'value ="{{$datas[0]->id}}"  disabled>
               </div>
           </div>
           <div class="col-md-4">
@@ -159,7 +152,7 @@
       </div>
         <div class="mt-4 mb-4">
           <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#exampleModalCenter">
-            Cadastro de Pedido
+            Cadastro de Item Pedido
           </button>
         </div>
         <table id="tabela" class="table table-striped yajra-datatable" style="width:100%">
@@ -183,7 +176,7 @@
 
 <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
 <script>
-  let id = $("#cod_pedido").val();
+  let id = $("#cod_item_pedido").val();
   $(document).ready(function () {
   
 	$('#tabela').DataTable({
@@ -210,6 +203,7 @@
 			name: 'id'
 		}, {
 			data: 'produto',
+
 			name: 'produto',
 		}, {
 			data: 'quantidade',
@@ -227,21 +221,23 @@
 	});
 });
 
-  function cadastro_pedido(value) {
+  function cadastro_item_pedido(value) {
     $.ajax({
       type: "POST",
-      data: $('#cadastro_pedido').serialize(),
-      url: "pedido/",
+      data: $('#cadastro_item_pedido').serialize(),
+      url: "/item/",
       success:function(response){
         //console.log(response);
         if(response) {
           $('#tabela').DataTable().ajax.reload();
-          swal("Sucesso!","Pedido Cadastrado" , "success");
+          swal("Sucesso!","Item AItem Pedido Cadastrado" , "success");
           $("#exampleModalCenter").modal("hide");
+        }else{
+          swal("ERROR!","Produto insuficiente  em adiciona item" , "error");
         }
       },
       error: function(error) {
-        console.log(error);
+        swal("ERROR!","Error em adiciona item" , "error");
       }
     });
   }
@@ -249,14 +245,14 @@
   function editar(id){
     $.ajax({
       type: "GET",
-      // data: $('#cadastro_pedido').serialize(),
-      url: `pedido/${id}`,
+      // data: $('#cadastro_item_pedido').serialize(),
+      url: `/item/${id}`,
       success:function(response){
-        $("#nome_cliente_altera").val(response.nome_cliente);
-        $("#cpf_cliente_altera").val(response.cpf_cliente);
-        $("#telefone_cliente_altera").val(response.telefone_cliente);
+        $("#id_produto_altera").val(response.id_produto);
+        function_quantidade_2(response.id)
         $("#id_altera").val(response.id);
-        $("#modal-pedido-altera").modal("show");
+        $("#quantidade_old_altera").val(response.quantidade);
+        $("#modal-item_pedido-altera").modal("show");
 
       },
       error: function(error) {
@@ -264,23 +260,20 @@
       }
     });
   }
-  function add_produtos(id){
-      window.location = `add_produtos/${id}`
-      
-  } 
 
 
-  function alterar_pedido(){
+
+  function alterar_item_pedido(){
     let id = $("#id_altera").val();
  
     $.ajax({
       type: "POST",
-      data: $('#altera_pedido').serialize(),
-      url: `pedido/${id}`,
+      data: $('#altera_item_pedido').serialize(),
+      url: `/item/${id}`,
       success:function(response){
           $('#tabela').DataTable().ajax.reload();
-          $("#modal-pedido-altera").modal("hide");
-          swal("Sucesso!","Pedido Alterado" , "success");
+          $("#modal-item_pedido-altera").modal("hide");
+          swal("Sucesso!","Item Pedido Alterado" , "success");
       },
       error: function(error) {
         console.log(error);
@@ -290,23 +283,65 @@
   
 
   function excluir(id){
+    
     $.ajax({
       type: "DELETE",
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
-      //data: $('#cadastro_pedido').serialize(),
-      url: `pedido/${id}`,
+      //data: $('#cadastro_item_pedido').serialize(),
+      url: `/item/${id}`,
       success:function(response){
         $('#tabela').DataTable().ajax.reload();
-        swal("Sucesso!","Pedido Apagado" , "success");
+        swal("Sucesso!","Item Pedido Apagado" , "success");
       },
       error: function(error) {
         console.log(error);
       }
     });
   }
+  function function_quantidade(id){
+    $.ajax({
+      type: "GET",
+      // data: $('#cadastro_item_pedido').serialize(),
+      url: `/produto_quantidade/${id}`,
+      success:function(response){
+       
+        $("#input_quantidade").html(response);
+       
 
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  }
+  function function_quantidade_2(id){
+    $.ajax({
+      type: "GET",
+      // data: $('#cadastro_item_pedido').serialize(),
+      url: `/produto_quantidade_2/${id}`,
+      success:function(response){
+       
+        $("#input_quantidade_2").html(response);
+       
+
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  }
+  function calcular(){
+    var valor1 = parseInt(document.getElementById('quantidade').value);
+    var valor2 = document.getElementById('unico').value;
+    document.getElementById('valor').value = valor1 * valor2;
+}
+function calcular_altera(){
+    var valor1 = parseInt(document.getElementById('quantidade_altera').value);
+    var valor2 = document.getElementById('unico').value;
+    document.getElementById('valor_altera').value = valor1 * valor2;
+}
 
 </script>
 

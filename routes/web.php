@@ -72,5 +72,8 @@ Route::resource('fornecedor', FornecedorController::class);
 Route::resource('produto', ProdutoController::class);
 Route::resource('estoque', EstoqueController::class);
 Route::resource('pedido', PedidoController::class);
-Route::resource('item_pedido', ItemPedidoController::class);
+Route::resource('/item', ItemPedidoController::class);
+
+Route::get('/produto_quantidade/{id}', [App\Http\Controllers\ItemPedidoController::class, 'produto_quantidade'])->name('produto_quantidade');
+Route::get('/produto_quantidade_2/{id}', [App\Http\Controllers\ItemPedidoController::class, 'produto_quantidade_2'])->name('produto_quantidade_2');
 Route::get('/add_produtos/{id}', [App\Http\Controllers\PedidoController::class, 'add_produtos'])->name('add_produtos');

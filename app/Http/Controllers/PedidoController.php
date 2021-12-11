@@ -131,6 +131,7 @@ class PedidoController extends Controller
         $datas = DB::select("SELECT p.* , u.name as vendedor FROM pedido p 
         INNER JOIN users u on u.id = p.id_usuario WHERE p.status not in ('Excluido') AND
         p.id = $id");
+        $produtoes =  DB::select("SELECT id, nome FROM produto");
         if ($request->ajax()) {
             $data = DB::select("SELECT ip.*, p.nome as produto FROM item_pedido ip INNER JOIN produto p on (p.id = ip.id_produto)");
          
@@ -141,6 +142,6 @@ class PedidoController extends Controller
         }
 
   
-        return view('pedido\add_produtos',compact('datas'));
+        return view('pedido\add_produtos', ['datas' => $datas,'produtoes' => $produtoes]);
     }
 }
