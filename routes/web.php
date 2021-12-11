@@ -79,3 +79,5 @@ Route::get('/finalizado', [App\Http\Controllers\PedidoController::class, 'finali
 Route::get('/produto_quantidade_2/{id}', [App\Http\Controllers\ItemPedidoController::class, 'produto_quantidade_2'])->name('produto_quantidade_2');
 Route::get('/finalizar_pedido/{id}', [App\Http\Controllers\ItemPedidoController::class, 'finalizar_pedido'])->name('finalizar_pedido');
 Route::get('/add_produtos/{id}', [App\Http\Controllers\PedidoController::class, 'add_produtos'])->name('add_produtos');
+Route::get('/detalhe_pedido/{id}', [App\Http\Controllers\PedidoController::class, 'detalhe_pedido'])->name('detalhe_pedido');
+Route::get('/concluir_pedido/{id}', [App\Http\Controllers\ItemPedidoController::class, 'concluir_pedido'])->name('concluir_pedido');

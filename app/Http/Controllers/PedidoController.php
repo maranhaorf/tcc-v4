@@ -39,11 +39,11 @@ class PedidoController extends Controller
     public function finalizado(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB::select("SELECT p.* , u.name as vendedor FROM pedido p 
+            $data = DB::select("SELECT p.* , u.name as vendedor, DATE_FORMAT(p.created_at, '%d/%l/%Y %H:%i:%s') AS 'created_at' FROM pedido p 
             INNER JOIN users u on u.id = p.id_usuario WHERE p.status  in ('Finalizado')");
-         
+          
             return DataTables::of($data)->addIndexColumn()->addColumn('action', function ($row) {
-                $btn = '<button onclick="add_produtos(' . $row->id . ')" class="edit btn btn-info btn-sm">Produtos</button>';
+                $btn = '<button onclick="add_produtos(' . $row->id . ')" class="edit btn btn-info btn-sm">Detalha</button>';
                 return $btn;
             })->rawColumns(['action'])->make(true);
         }
@@ -194,5 +194,23 @@ class PedidoController extends Controller
 
   
         return view('pedido\add_produtos', ['datas' => $datas,'produtoes' => $produtoes]);
+    }
+    public function detalhe_pedido(Request $request, $id)
+    {  
+        $datas = DB::select("SELECT p.* , u.name as vendedor FROM pedido p 
+        INNER JOIN users u on u.id = p.id_usuario WHERE p.status  in ('Finalizado') AND
+        p.id = $id");
+        $produtoes =  DB::select("SELECT id, nome FROM produto");
+        if ($request->ajax()) {
+            $data = DB::select("SELECT ip.*, p.nome as produto FROM item_pedido ip INNER JOIN produto p on (p.id = ip.id_produto) where ip.id_pedido = $id");
+         
+            return DataTables::of($data)->addIndexColumn()->addColumn('action', function ($row) {
+                $btn = '';
+                return $btn;
+            })->rawColumns(['action'])->make(true);
+        }
+
+  
+        return view('pedido\detalhe_pedido', ['datas' => $datas,'produtoes' => $produtoes]);
     }
 }

@@ -105,6 +105,13 @@ class ItemPedidoController extends Controller
         ]);
        
     }
+    public function concluir_pedido($id)
+    {  
+        Pedido::where('id', $id)->update([
+            'status' => 'Concluido'
+        ]);
+       
+    }
     /**
      * Show the form for editing the specified resource.
      *

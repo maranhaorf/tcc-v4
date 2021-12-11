@@ -55,7 +55,7 @@
 		processing: true,
 		serverSide: true,
   
-		ajax: '/pedido',
+		ajax: '/finalizado/',
 		dom: 'Bfrtip',
 		buttons: [{
 			text: 'My button',
@@ -134,7 +134,7 @@
     });
   }
   function add_produtos(id){
-      window.location = `add_produtos/${id}`
+      window.location = `detalhe_pedido/${id}`
       
   } 
 
