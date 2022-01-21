@@ -7,6 +7,11 @@ use App\Http\Controllers\EstoqueController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ItemPedidoController;
 use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\TelaController;
+
+use App\Http\Controllers\OrcamentoPedidoController;
+use App\Http\Controllers\orcamentoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,7 +24,7 @@ use App\Http\Controllers\PerfilController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('welcome');
 });
 
 Auth::routes();
@@ -70,6 +75,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 Route::resource('fornecedor', FornecedorController::class);
+Route::resource('orcamento', orcamentoController::class);
+Route::resource('/orcamentosPedido', OrcamentoPedidoController::class);
 Route::resource('produto', ProdutoController::class);
 Route::resource('estoque', EstoqueController::class);
 Route::resource('pedido', PedidoController::class);
@@ -78,11 +85,22 @@ Route::resource('/item', ItemPedidoController::class);
 
 Route::get('/produto_quantidade/{id}', [App\Http\Controllers\ItemPedidoController::class, 'produto_quantidade'])->name('produto_quantidade');
 Route::get('/finalizado', [App\Http\Controllers\PedidoController::class, 'finalizado'])->name('finalizado');
+Route::get('/disponibilidade', [App\Http\Controllers\TelaController::class, 'disponibilidade'])->name('disponibilidade');
 Route::get('/produto_quantidade_2/{id}', [App\Http\Controllers\ItemPedidoController::class, 'produto_quantidade_2'])->name('produto_quantidade_2');
 Route::get('/estoque_minimo', [App\Http\Controllers\ItemPedidoController::class, 'estoque_minimo'])->name('estoque_minimo');
 Route::get('/finalizar_pedido/{id}', [App\Http\Controllers\ItemPedidoController::class, 'finalizar_pedido'])->name('finalizar_pedido');
 Route::get('/add_produtos/{id}', [App\Http\Controllers\PedidoController::class, 'add_produtos'])->name('add_produtos');
+
+Route::get('/add_produtos2/{id}', [App\Http\Controllers\orcamentoController::class, 'add_produtos'])->name('add_produtos2');
 Route::get('/detalhe_pedido/{id}', [App\Http\Controllers\PedidoController::class, 'detalhe_pedido'])->name('detalhe_pedido');
+
+Route::get('/orcamento_pedido/{id}', [App\Http\Controllers\orcamentoController::class, 'orcamento_pedido'])->name('orcamento_pedido');
+
+Route::post('/cadastro/{id}', [App\Http\Controllers\orcamentoController::class, 'cadastro'])->name('cadastro');
+
 Route::get('/concluir_pedido/{id}', [App\Http\Controllers\ItemPedidoController::class, 'concluir_pedido'])->name('concluir_pedido');
 
 
+Route::get('/produto_quantidade3/{id}', [App\Http\Controllers\OrcamentoPedidoController::class, 'produto_quantidade3'])->name('produto_quantidade3');
+Route::get('/produto_quantidade4/{id}', [App\Http\Controllers\OrcamentoPedidoController::class, 'produto_quantidade4'])->name('produto_quantidade4');
+Route::get('/finalizar_pedido2/{id}', [App\Http\Controllers\OrcamentoPedidoController::class, 'finalizar_pedido2'])->name('finalizar_pedido2');
