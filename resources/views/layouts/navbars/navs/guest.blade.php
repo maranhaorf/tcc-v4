@@ -21,8 +21,8 @@
           </a>
         </li>
 
-        <li class="nav-item ">
-          <a href="{{ route('profile.edit') }}" class="nav-link">
+        <li class="nav-item{{ $activePage == 'sobre_nos' ? ' active' : '' }}">
+          <a href="{{ url('/sobre_nos') }}" class="nav-link">
             <i class="material-icons">group</i> {{ __('Sobre Nós') }}
           </a>
         </li>

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'profile', 'titlePage' => __('Lista Produtos')])
+@extends('layouts.app', ['activePage' => 'profile', 'titlePage' => __('dashboard')])
 
 @section('content')
   <div class="content">
@@ -11,7 +11,7 @@
                 <i class="material-icons">content_copy</i>
               </div>
               <p class="card-category">Produtos Vendidos</p>
-              <h3 class="card-title">8
+              <h3 class="card-title">{{$quantidade[0]->quantidade  }}
               
               </h3>
             </div>
@@ -27,7 +27,8 @@
                 <i class="material-icons">store</i>
               </div>
               <p class="card-category">Venda Hoje</p>
-              <h3 class="card-title">R$: 342,24</h3>
+
+              <h3 class="card-title">R$: {{$valor[0]->valor  }}</h3>
             </div>
             <div class="card-footer">
           
@@ -41,7 +42,7 @@
                 <i class="material-icons">info_outline</i>
               </div>
               <p class="card-category">Separaçao Produtos</p>
-              <h3 class="card-title">0</h3>
+              <h3 class="card-title"> {{$separacao[0]->quantidade  }}</h3>
             </div>
             <div class="card-footer">
             
@@ -60,20 +61,16 @@
              
             </div>
             <div class="card-body table-responsive">
-              <table class="table table-hover">
+              <table id="tabela" class="table table-striped yajra-datatable" style="width:100%">
                 <thead class="text-warning">
-                  <th>ID</th>
+                  <tr class="text-center">
                   <th>Nome</th>
-                  <th>Venda</th>
+                  <th>Valor</th>
                   <th>Numero de Venda</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Davidson Rocha</td>
-                    <td>R$: 342,24</td>
-                    <td>8</td>
                   </tr>
+                </thead>
+                <tbody class="text-center">
+                  
                  
                 </tbody>
               </table>
@@ -83,13 +80,38 @@
       </div>
     </div>
   </div>
+  <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+<script>
+ 
+  $(document).ready(function () {
+  
+	$('#tabela').DataTable({
+		language: {
+			"url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json",
+		},
+		processing: true,
+		serverSide: true,
+		ajax: `/home`,
+
+		columns: [{
+			data: 'nome',
+			name: 'nome',
+		}, {
+			data: 'valor',
+			name: 'valor',
+		},{
+			data: 'venda',
+			name: 'venda',
+		},
+   ]
+	});
+});
+
+
+
+</script>
 @endsection
 
 @push('js')
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      md.initDashboardPageCharts();
-    });
-  </script>
+
 @endpush

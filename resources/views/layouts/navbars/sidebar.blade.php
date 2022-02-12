@@ -29,7 +29,7 @@
         </a>
         <div class="collapse show" id="laravelExample">
           <ul class="nav">
-            <li class="nav-item{{ $activePage == 'profile' ? 'active' : '' }}">
+            <li class="nav-item{{ $activePage == 'editar_perfil' ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('profile.edit') }}">
                 <span class="sidebar-mini"> EP </span>
                 <span class="sidebar-normal">{{ __('Editar Perfil') }} </span>
@@ -55,7 +55,7 @@
         </a>
         <div class="collapse show" id="produtos">
           <ul class="nav">
-            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+            <li class="nav-item{{ $activePage == 'gerenciar_produto' ? ' active' : '' }}">
               <a class="nav-link" href="{{ url('produto') }}">
                 <span class="sidebar-mini"> GP </span>
                 <span class="sidebar-normal">{{ __('Gerenciar Produtos') }} </span>
@@ -76,7 +76,7 @@
         </a>
         <div class="collapse show" id="estoques">
           <ul class="nav">
-            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+            <li class="nav-item{{ $activePage == 'gerenciar_estoque' ? ' active' : '' }}">
               <a class="nav-link" href="{{ url('estoque') }}">
                 <span class="sidebar-mini"> GP </span>
                 <span class="sidebar-normal">{{ __('Gerenciar Estoque') }} </span>
@@ -98,17 +98,24 @@
         </a>
         <div class="collapse show" id="pedidos">
           <ul class="nav">
-            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+            <li class="nav-item{{ $activePage == 'gerenciar_pedidos' ? ' active' : '' }}">
               <a class="nav-link" href="{{ url('pedido') }}">
                 <span class="sidebar-mini"> GP </span>
                 <span class="sidebar-normal">{{ __('Gerenciar Pedido') }} </span>
               </a>
               
             </li>
-            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+            <li class="nav-item{{ $activePage == 'separacao_pedidos' ? ' active' : '' }}">
               <a class="nav-link" href="{{ url('finalizado') }}">
                 <span class="sidebar-mini"> SP </span>
                 <span class="sidebar-normal">{{ __('Separaçaõ de Pedidos') }} </span>
+              </a>
+              
+            </li>
+            <li class="nav-item{{ $activePage == 'pedidos_finalizados' ? ' active' : '' }}">
+              <a class="nav-link" href="{{ url('concluido') }}">
+                <span class="sidebar-mini"> PF </span>
+                <span class="sidebar-normal">{{ __('Pedidos Finalizados') }} </span>
               </a>
               
             </li>
@@ -127,13 +134,8 @@
         </a>
         <div class="collapse show" id="fornecedor">
           <ul class="nav">
-            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-              <a class="nav-link" href="">
-                <span class="sidebar-mini"> GP </span>
-                <span class="sidebar-normal">{{ __('Gerenciar Fornecedor') }} </span>
-              </a>
-            </li>
-            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+            
+            <li class="nav-item{{ $activePage == 'gerenciar_fonecedores' ? ' active' : '' }}">
               <a class="nav-link" href="{{ url('fornecedor') }}">
                 <span class="sidebar-mini"> GF </span>
                 <span class="sidebar-normal"> {{ __('Gerenciar Fornecedores') }} </span>

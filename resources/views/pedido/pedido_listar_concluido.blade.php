@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'separacao_pedidos', 'titlePage' => __('Separação de Pedidos')])
+@extends('layouts.app', ['activePage' => 'pedidos_finalizados', 'titlePage' => __('Pedidos Concluídos')])
 
 @section('content')
 <style>
@@ -20,7 +20,7 @@
 
 
         <div class="card-header card-header-primary">
-          <h4 class="card-title mt-0"> Listagem de Pedidos Para Separação</h4>
+          <h4 class="card-title mt-0"> Listagem de Pedidos Concluidos</h4>
 
         </div>
         <div class="row"><br></div>
@@ -55,7 +55,7 @@
 		processing: true,
 		serverSide: true,
   
-		ajax: '/finalizado/',
+		ajax: '/concluido/',
 		dom: 'Bfrtip',
 		buttons: [{
 			text: 'My button',

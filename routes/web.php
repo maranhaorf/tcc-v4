@@ -26,7 +26,9 @@ use App\Http\Controllers\orcamentoController;
 Route::get('/', function () {
 	return view('welcome');
 });
-
+Route::get('/sobre_nos', function () {
+	return view('pagina\sobre_nos');
+});
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -85,6 +87,7 @@ Route::resource('/item', ItemPedidoController::class);
 
 Route::get('/produto_quantidade/{id}', [App\Http\Controllers\ItemPedidoController::class, 'produto_quantidade'])->name('produto_quantidade');
 Route::get('/finalizado', [App\Http\Controllers\PedidoController::class, 'finalizado'])->name('finalizado');
+Route::get('/concluido', [App\Http\Controllers\PedidoController::class, 'concluido'])->name('concluido');
 Route::get('/disponibilidade', [App\Http\Controllers\TelaController::class, 'disponibilidade'])->name('disponibilidade');
 Route::get('/produto_quantidade_2/{id}', [App\Http\Controllers\ItemPedidoController::class, 'produto_quantidade_2'])->name('produto_quantidade_2');
 Route::get('/estoque_minimo', [App\Http\Controllers\ItemPedidoController::class, 'estoque_minimo'])->name('estoque_minimo');

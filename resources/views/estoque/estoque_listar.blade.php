@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'profile', 'titlePage' => __('Lista Estoques')])
+@extends('layouts.app', ['activePage' => 'gerenciar_estoque', 'titlePage' => __('Lista Estoques')])
 
 @section('content')
 <style>

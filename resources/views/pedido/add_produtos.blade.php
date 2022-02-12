@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'profile', 'titlePage' => __('Lista Item Pedidos')])
+@extends('layouts.app', ['activePage' => 'gerenciar_pedidos', 'titlePage' => __('Lista Item Pedidos')])
 
 @section('content')
 <style>

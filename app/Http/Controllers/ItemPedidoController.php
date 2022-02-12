@@ -125,6 +125,7 @@ class ItemPedidoController extends Controller
     {
         Pedido::where('id', $id)->update([
             'status' => 'Concluido'
+
         ]);
     }
     /**
